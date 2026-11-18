@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f7f4eb">
+  <meta name="description" content="Savings Lab — an interactive Solana Tec solar savings booth experience.">
+  <title>Solana Tec — Savings Lab</title>
+  <link rel="preload" as="image" href="assets/vegetation/tree-animation-v2/landscape-battery-energy-v5.png" fetchpriority="high">
+  <link rel="preload" as="image" href="assets/vegetation/tree-animation-v2/tree-left-large-v2.png">
+  <link rel="preload" as="image" href="assets/vegetation/tree-animation-v2/palm-porch-v2.png">
+  <link rel="preload" as="image" href="assets/brand/solana-tec-logo-transparent-v2.png">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/scene.css">
+  <link rel="stylesheet" href="css/savings-lab.css">
+  <link rel="stylesheet" href="css/savings-lab-responsive.css">
+  <link rel="stylesheet" href="css/kiosk.css">
+</head>
+<body>
+  <div class="experience savings-lab" id="experience" data-screen="welcome">
+    <section class="scene-card" id="sceneCard" aria-label="Animated solar landscape">
+      <div class="visual-plane background-plane">
+        <img class="landscape-image" src="assets/vegetation/tree-animation-v2/landscape-battery-energy-v5.png" alt="A modern Malaysian solar home with rooftop panels, an inverter and home battery storage">
+      </div>
+
+      <div class="lighting lighting-morning" aria-hidden="true"></div>
+      <div class="lighting lighting-evening" aria-hidden="true"></div>
+      <div class="lighting lighting-depth" aria-hidden="true"></div>
+
+      <div class="visual-plane interaction-plane" aria-hidden="true">
+        <svg class="energy-network" id="energyNetwork" viewBox="0 0 1672 941" preserveAspectRatio="none">
+          <defs>
+            <filter id="energyGlowLab" x="-35%" y="-35%" width="170%" height="170%">
+              <feGaussianBlur stdDeviation="1.6" result="blur"></feGaussianBlur>
+              <feMerge><feMergeNode in="blur"></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge>
+            </filter>
+          </defs>
+          <g class="energy-nodes" filter="url(#energyGlowLab)">
+            <circle r="3.6"><animateMotion dur="7.4s" repeatCount="indefinite" path="M1058 309 C1058 321 1049 324 1049 335 C1049 340 1055 339 1065 338 C1160 333 1260 323 1428 310 C1437 310 1443 318 1443 330 V490 C1443 505 1434 511 1434 526 V602 C1434 615 1410 620 1380 620 C1362 620 1348 630 1348 641"></animateMotion></circle>
+            <circle r="2.4"><animateMotion dur="7.4s" begin="-3.7s" repeatCount="indefinite" path="M1058 309 C1058 321 1049 324 1049 335 C1049 340 1055 339 1065 338 C1160 333 1260 323 1428 310 C1437 310 1443 318 1443 330 V490 C1443 505 1434 511 1434 526 V602 C1434 615 1410 620 1380 620 C1362 620 1348 630 1348 641"></animateMotion></circle>
+            <circle r="3.2"><animateMotion dur="7.8s" begin="-1.8s" repeatCount="indefinite" path="M1318 284 C1318 298 1312 303 1312 309 C1312 316 1320 317 1332 316 C1360 314 1395 312 1428 310 C1437 310 1443 318 1443 330 V490 C1443 505 1434 511 1434 526 V602 C1434 615 1410 620 1380 620 C1397 620 1416 630 1416 641"></animateMotion></circle>
+            <circle r="2.2"><animateMotion dur="7.8s" begin="-5.6s" repeatCount="indefinite" path="M1318 284 C1318 298 1312 303 1312 309 C1312 316 1320 317 1332 316 C1360 314 1395 312 1428 310 C1437 310 1443 318 1443 330 V490 C1443 505 1434 511 1434 526 V602 C1434 615 1410 620 1380 620 C1397 620 1416 630 1416 641"></animateMotion></circle>
+            <circle r="2.7"><animateMotion dur="5.8s" begin="-2.4s" repeatCount="indefinite" path="M1378 548 C1378 536 1368 526 1357 526 C1280 525 1200 528 1120 529 C1108 529 1100 522 1100 512"></animateMotion></circle>
+          </g>
+        </svg>
+
+        <div class="vegetation-layer" id="treeLayer">
+          <div class="vegetation-piece scene-tree tree-left-large" data-stage="2" data-order="1">
+            <img src="assets/vegetation/tree-animation-v2/tree-left-large-v2.png" alt="">
+          </div>
+          <div class="vegetation-piece scene-tree tree-behind-wall" data-stage="2" data-order="2">
+            <img src="assets/vegetation/tree-animation-v2/tree-left-large-v2.png" alt="">
+          </div>
+          <div class="vegetation-piece scene-tree tree-sky-fill" data-stage="2" data-order="3">
+            <img src="assets/vegetation/tree-animation-v2/tree-left-large-v2.png" alt="">
+          </div>
+          <div class="vegetation-piece scene-tree tree-porch-palm" data-stage="3" data-order="4">
+            <img src="assets/vegetation/tree-animation-v2/palm-porch-v2.png" alt="">
+          </div>
+        </div>
+      </div>
+
+      <aside class="live-estimate scene-profile-only" aria-live="polite">
+        <div class="estimate-icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 28h30l-4-14H13L9 28Z"></path><path d="M15 18h18M20 14l-2 14M28 14l2 14M24 28v8M17 36h14"></path><path d="M37 8v5M42 13h-5M40.5 9.5l-3 3"></path></svg>
+        </div>
+        <div>
+          <span data-i18n="liveEstimate">Live estimate</span>
+          <strong><b id="livePanels">13</b> <span data-i18n="panels">panels</span></strong>
+          <small><span data-i18n="saveAbout">about</span> <b id="liveSaving">RM362</b> <span data-i18n="perMonth">/ month</span></small>
+        </div>
+      </aside>
+    </section>
+
+    <header class="lab-topbar">
+      <div class="brand-lockup">
+        <img src="assets/brand/solana-tec-logo-transparent-v2.png" alt="Solana Tec" class="brand-logo">
+      </div>
+      <div class="lab-actions">
+        <div class="language-toggle" role="group" aria-label="Language">
+          <button type="button" class="active" data-lang="en" aria-pressed="true">EN</button>
+          <button type="button" data-lang="zh" aria-pressed="false">中文</button>
+        </div>
+        <button class="reset-button" id="resetButton" type="button" aria-label="Reset experience">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 11a8 8 0 1 0 2.2-5.5L4 8.2"></path><path d="M4 3.8v4.4h4.4"></path></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="lab-main">
+      <section class="lab-screen welcome-screen active" id="welcomeScreen" aria-labelledby="welcomeTitle">
+        <div class="lab-card welcome-card">
+          <p class="eyebrow"><span aria-hidden="true"></span><b data-i18n="boothLabel">Booth 06 · Savings Lab</b></p>
+          <h1 id="welcomeTitle" data-i18n-html="welcomeTitle">How much can<br>your roof <em>save?</em></h1>
+          <p class="welcome-copy" data-i18n="welcomeCopy">Tell us your electricity bill. In 30 seconds, see your estimated savings and payback.</p>
+          <div class="self-play-badge">
+            <span class="animated-sun" aria-hidden="true">
+              <span class="sun-rays"></span>
+              <span class="sun-core"></span>
+            </span>
+            <span data-i18n="selfPlay">Self-play experience</span>
+          </div>
+          <button class="primary-action start-action" id="startButton" type="button">
+            <span data-i18n="start">Calculate Savings</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg>
+          </button>
+        </div>
+      </section>
+
+      <section class="lab-screen profile-screen" id="profileScreen" aria-labelledby="profileTitle" aria-hidden="true">
+        <div class="lab-card profile-card" data-profile-direction="forward">
+          <div class="card-heading-row">
+            <div>
+              <p class="card-kicker" data-i18n="profileKicker">Your savings profile</p>
+              <h1 id="profileTitle" data-i18n="profileTitle">Build your estimate.</h1>
+            </div>
+            <div class="wizard-progress" aria-label="Progress">
+              <strong id="profileStepLabel">Step 1 of 4</strong>
+              <div class="wizard-dots" aria-hidden="true"><i class="active" data-step-dot="1"></i><i data-step-dot="2"></i><i data-step-dot="3"></i><i data-step-dot="4"></i></div>
+            </div>
+          </div>
+
+          <div class="profile-step-stack">
+            <section class="profile-step active" data-profile-step="1" aria-hidden="false">
+              <div class="lab-question wizard-question bill-question">
+                <div class="question-title"><span>1</span><div><strong data-i18n="billTitle">Monthly TNB bill</strong><small data-i18n="billHint">Tap the closest amount or drag.</small></div></div>
+                <div class="bill-entry">
+                  <button type="button" class="square-button" id="billMinus" aria-label="Decrease bill">−</button>
+                  <label for="billInput"><span>RM</span><input id="billInput" type="number" inputmode="numeric" min="50" max="3000" step="10" value="400"></label>
+                  <button type="button" class="square-button" id="billPlus" aria-label="Increase bill">+</button>
+                </div>
+                <input id="billRange" class="lab-range" type="range" min="50" max="3000" step="10" value="400" aria-label="Monthly TNB bill">
+                <div class="choice-row bill-presets" aria-label="Bill presets">
+                  <button type="button" data-bill="300">RM300</button><button type="button" data-bill="500">RM500</button><button type="button" data-bill="700">RM700</button><button type="button" data-bill="1000">RM1,000</button>
+                </div>
+              </div>
+            </section>
+
+            <section class="profile-step" data-profile-step="2" aria-hidden="true">
+              <div class="lab-question wizard-question supply-question">
+                <div class="question-title"><span>2</span><div><strong data-i18n="supplyTitle">Electricity supply</strong><small data-i18n="supplyHint">Three-phase homes usually have three main switches in the DB box.</small></div></div>
+                <div class="choice-row supply-choices wizard-choice-cards">
+                  <button type="button" data-phase="single" data-i18n="singlePhase">Single-phase</button>
+                  <button type="button" data-phase="three" data-i18n="threePhase">Three-phase</button>
+                  <button type="button" data-phase="auto" class="active" data-i18n="notSure">Not sure</button>
+                </div>
+              </div>
+            </section>
+
+            <section class="profile-step" data-profile-step="3" aria-hidden="true">
+              <div class="lab-question wizard-question daytime-question">
+                <div class="question-title"><span>3</span><div><strong data-i18n="daytimeQuestion">Is someone home in the daytime?</strong><small data-i18n="daytimeHint">Solar works best when you use power while the sun is up.</small></div></div>
+                <div class="choice-row daytime-choices daytime-detail-choices">
+                  <button type="button" data-day="15"><strong data-i18n="mostlyOut">Mostly out</strong><span data-i18n="mostlyOutDesc">Work or school all day</span><small>≈ 15%</small></button>
+                  <button type="button" data-day="30" class="active"><strong data-i18n="sometimes">Sometimes</strong><span data-i18n="sometimesDesc">Someone home part of the day</span><small>≈ 30%</small></button>
+                  <button type="button" data-day="50"><strong data-i18n="mostlyHome">Mostly home</strong><span data-i18n="mostlyHomeDesc">Work from home, retirees or kids</span><small>≈ 50%</small></button>
+                </div>
+                <div class="daytime-share-heading"><span data-i18n="daytimeShare">Daytime share of your electricity</span><strong id="daytimeReadout">30%</strong></div>
+                <input id="daytimeRange" class="lab-range" type="range" min="10" max="70" step="5" value="30" aria-label="Daytime electricity share">
+                <p class="daytime-helper" data-i18n="daytimeFineTune">Drag to fine-tune. Aircon at night and EV charging at night lower this number.</p>
+              </div>
+            </section>
+
+            <section class="profile-step" data-profile-step="4" aria-hidden="true">
+              <div class="lab-question wizard-question location-question">
+                <div class="question-title"><span>4</span><div><strong data-i18n="locationTitle">Location</strong><small data-i18n="locationHint">Sunlight differs slightly by area.</small></div></div>
+                <div class="choice-row location-choices wizard-location-choices">
+                  <button type="button" data-area="JB" class="active">Johor Bahru</button>
+                  <button type="button" data-area="BATU_PAHAT">Batu Pahat</button>
+                  <button type="button" data-area="MELAKA">Melaka</button>
+                  <button type="button" data-area="MUAR">Muar</button>
+                  <button type="button" data-area="KLUANG">Kluang</button>
+                  <button type="button" data-area="PONTIAN">Pontian</button>
+                  <button type="button" data-area="KOTA_TINGGI">Kota Tinggi</button>
+                  <button type="button" data-area="KULAI">Kulai</button>
+                  <button type="button" data-area="MERSING">Mersing</button>
+                  <button type="button" data-area="SEGAMAT">Segamat</button>
+                  <button type="button" data-area="TANGKAK">Tangkak</button>
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <div class="profile-actions wizard-actions">
+            <button class="text-action" id="profileBackButton" type="button" data-i18n="back">Back</button>
+            <button class="primary-action wizard-next-action" id="profileNextButton" type="button"><span id="profileNextLabel" data-i18n="next">Next</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></button>
+          </div>
+        </div>
+      </section>
+
+      <section class="lab-screen results-screen" id="resultsScreen" aria-labelledby="resultsTitle" aria-hidden="true">
+        <div class="lab-card result-summary-card">
+          <div class="card-heading-row result-heading-row">
+            <p class="card-kicker" data-i18n="resultKicker">Your savings result</p>
+            <div class="step-indicator" aria-label="Progress"><span data-i18n="profileStep">Profile</span><i></i><span class="active" data-i18n="resultsStep">Results</span></div>
+          </div>
+          <div class="best-fit-badge"><span>★</span><b data-i18n="recommended">Recommended</b></div>
+          <h1 id="resultsTitle" data-i18n="batteryName">Solar + battery</h1>
+          <p class="save-label" data-i18n="saveAboutCaps">Save about</p>
+          <div class="hero-saving"><span>RM</span><strong id="heroSaving">362</strong><small data-i18n="perMonth">/ month</small></div>
+
+          <div class="result-stat-grid">
+            <div><span data-i18n="newBill">Estimated new bill</span><strong id="resultNewBill">RM38</strong></div>
+            <div><span data-i18n="solarPanels">Solar panels</span><strong><b id="resultPanels">13</b> <i data-i18n="panels">panels</i></strong></div>
+            <div><span data-i18n="systemSize">System size</span><strong id="resultKwp">8.5 kWp</strong></div>
+          </div>
+          <div class="payback-row"><span data-i18n="simplePayback">Simple payback</span><strong><b id="resultPayback">7.4</b> <i data-i18n="years">years</i></strong></div>
+
+          <div class="result-actions">
+            <button class="primary-action" id="keepResultButton" type="button"><span data-i18n="keepResult">Keep my result</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg></button>
+            <button class="secondary-action" id="startAgainButton" type="button" data-i18n="startAgain">Start again</button>
+          </div>
+        </div>
+
+        <div class="comparison-area" aria-labelledby="compareTitle">
+          <div class="comparison-heading-row">
+            <h2 id="compareTitle" data-i18n="compare">Compare your options</h2>
+            <p class="result-disclaimer" data-i18n="disclaimer">Illustrative estimate · Final design confirmed after site assessment</p>
+          </div>
+          <div class="comparison-grid">
+            <article class="option-card">
+              <div class="option-icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 28h30l-4-14H13L9 28Z"></path><path d="M15 18h18M20 14l-2 14M28 14l2 14M24 28v8M17 36h14"></path></svg></div>
+              <h3 data-i18n="solarOnly">1. Solar only (on-grid inverter)</h3><p data-i18n="solarOnlyDesc">Lowest cost, fastest payback</p>
+              <strong><span id="onGridSaving">RM271</span> <small data-i18n="perMonth">/ month</small></strong>
+              <div class="option-details">
+                <div><span data-i18n="payback">Payback</span><b id="onGridPayback">5.9 years</b></div>
+                <div><span data-i18n="billAfter">Bill after</span><b id="onGridAfter">RM129</b></div>
+                <div><span data-i18n="kwpPanels">kWp (panels)</span><b id="onGridKwp">8.4 (13)</b></div>
+              </div>
+            </article>
+            <article class="option-card">
+              <div class="option-icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2"><rect x="10" y="10" width="28" height="28" rx="5"></rect><path d="m26 15-7 11h6l-3 8 8-12h-6l2-7Z"></path></svg></div>
+              <h3 data-i18n="hybridReady">2. Solar with hybrid inverter</h3><p data-i18n="hybridDesc">Add a battery any time later</p>
+              <strong><span id="hybridSaving">RM271</span> <small data-i18n="perMonth">/ month</small></strong>
+              <div class="option-details">
+                <div><span data-i18n="payback">Payback</span><b id="hybridPayback">7.4 years</b></div>
+                <div><span data-i18n="billAfter">Bill after</span><b id="hybridAfter">RM129</b></div>
+                <div><span data-i18n="kwpPanels">kWp (panels)</span><b id="hybridKwp">8.4 (13)</b></div>
+              </div>
+            </article>
+            <article class="option-card recommended-card">
+              <div class="recommended-tag" data-i18n="blackoutBadge">Power in blackout</div>
+              <div class="option-icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2"><rect x="15" y="9" width="18" height="30" rx="4"></rect><path d="M21 5h6M21 24l5-8v6h4l-7 10v-8h-2Z"></path></svg></div>
+              <h3 data-i18n="batteryShort">3. Solar + battery + backup</h3><p data-i18n="batteryDesc">Keeps your lights on in a blackout</p>
+              <strong><span id="batterySaving">RM362</span> <small data-i18n="perMonth">/ month</small></strong>
+              <div class="option-details">
+                <div><span data-i18n="payback">Payback</span><b id="batteryPayback">7.4 years</b></div>
+                <div><span data-i18n="billAfter">Bill after</span><b id="batteryAfter">RM38</b></div>
+                <div><span data-i18n="kwpPanels">kWp (panels)</span><b id="batteryKwp">8.4 (13)</b></div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div class="result-modal" id="resultModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" hidden>
+      <div class="modal-backdrop" data-close-modal></div>
+      <div class="modal-card">
+        <button class="modal-close" type="button" data-close-modal aria-label="Close">×</button>
+        <div class="result-complete-badge" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 4 4L19 6"></path></svg>
+        </div>
+        <p class="card-kicker" data-i18n="finalKicker">Station 06 complete</p>
+        <h2 id="modalTitle" data-i18n="finalTitle">Your Savings Lab result</h2>
+        <p class="modal-intro" data-i18n="finalCopy">Take a photo of your result, then continue to the next station.</p>
+        <div class="share-summary" id="shareSummary"></div>
+        <div class="photo-checkpoint"><span class="photo-checkpoint-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 7h3l1.4-2h5.2L16 7h3a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2Z"></path><circle cx="12" cy="13" r="3.2"></circle></svg></span><span data-i18n="photoReady">Photo checkpoint · Show your result at the next station</span></div>
+        <button class="secondary-action" type="button" data-close-modal data-i18n="close">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script defer src="js/savings-lab-calculator.js"></script>
+  <script defer src="js/savings-lab-scene.js"></script>
+  <script defer src="js/kiosk-display.js"></script>
+  <script defer src="js/savings-lab-app.js"></script>
+</body>
+</html>

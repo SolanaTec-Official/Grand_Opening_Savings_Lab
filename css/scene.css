@@ -1,0 +1,570 @@
+.scene-card {
+  --morning: 0;
+  --noon: 1;
+  --evening: 0;
+  --energy-opacity: .78;
+  --scene-brightness: 1;
+  --scene-saturation: 1;
+  --tree-brightness: 1;
+  --tree-saturation: 1;
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  min-width: 0;
+  min-height: 100%;
+  overflow: hidden;
+  background: #bcd8df;
+  isolation: isolate;
+  pointer-events: auto;
+}
+
+.visual-plane {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  transform-origin: 0 0;
+  pointer-events: none;
+}
+
+.background-plane { z-index: 0; }
+.interaction-plane { z-index: 6; }
+
+.landscape-image {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  filter: brightness(var(--scene-brightness)) saturate(var(--scene-saturation));
+  transform: scale(1.015);
+  transition: filter .18s linear;
+}
+
+.lighting {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  pointer-events: none;
+  transition: opacity .18s linear;
+}
+
+.lighting-morning {
+  opacity: var(--morning);
+  background:
+    radial-gradient(circle at 16% 24%, rgba(255, 211, 143, .56), transparent 25%),
+    linear-gradient(110deg, rgba(255, 166, 96, .25), transparent 48%),
+    linear-gradient(180deg, rgba(213, 225, 239, .22), rgba(250, 205, 143, .16));
+  mix-blend-mode: soft-light;
+}
+
+.lighting-evening {
+  opacity: var(--evening);
+  background:
+    radial-gradient(circle at 86% 27%, rgba(255, 176, 88, .5), transparent 25%),
+    linear-gradient(290deg, rgba(245, 126, 55, .23), transparent 46%),
+    linear-gradient(180deg, rgba(34, 62, 105, .32), rgba(90, 58, 71, .18));
+  mix-blend-mode: multiply;
+}
+
+.lighting-depth {
+  z-index: 2;
+  opacity: .34;
+  background:
+    linear-gradient(180deg, rgba(4, 28, 61, .02), transparent 50%, rgba(7, 34, 45, .13)),
+    linear-gradient(90deg, rgba(7, 34, 61, .03), transparent 24% 83%, rgba(7, 34, 61, .05));
+}
+
+.scene-topline {
+  position: absolute;
+  z-index: 12;
+  top: 91px;
+  left: clamp(520px, 29vw, 600px);
+  right: clamp(24px, 2vw, 38px);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  pointer-events: none;
+}
+
+.live-card {
+  min-width: 158px;
+  min-height: 62px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  border: 1px solid rgba(255, 255, 255, .32);
+  border-radius: 18px;
+  background: rgba(9, 48, 88, .96);
+  color: #fff;
+  box-shadow: 0 12px 34px rgba(8, 35, 59, .18);
+  backdrop-filter: blur(8px);
+  font-family: var(--font);
+}
+
+.live-icon {
+  width: 29px;
+  height: 29px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(255, 190, 52, .13);
+}
+
+.live-icon i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #ffc13d;
+  box-shadow: 0 0 0 6px rgba(255, 193, 61, .13), 0 0 18px rgba(255, 193, 61, .65);
+  animation: livePulse 1.9s ease-in-out infinite;
+}
+
+@keyframes livePulse {
+  50% { transform: scale(.75); opacity: .68; }
+}
+
+.live-card span {
+  display: block;
+  color: #c2d5e5;
+  font-size: 9px;
+  font-weight: 760;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+
+.live-card strong {
+  display: block;
+  margin-top: 3px;
+  font-size: 20px;
+  font-weight: 620;
+  letter-spacing: -.02em;
+}
+
+.live-card b {
+  font-weight: inherit;
+}
+
+.scene-instruction {
+  max-width: 210px;
+  padding: 9px 13px;
+  border: 1px solid rgba(255, 255, 255, .5);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .68);
+  color: #4c657c;
+  box-shadow: 0 7px 22px rgba(16, 43, 61, .08);
+  font-size: 12.5px;
+  font-weight: 700;
+  text-align: center;
+  backdrop-filter: blur(12px);
+}
+
+.sun-control {
+  position: absolute;
+  z-index: 13;
+  top: 58px;
+  left: clamp(660px, 39vw, 750px);
+  right: clamp(90px, 8vw, 155px);
+  height: 142px;
+  touch-action: none;
+  user-select: none;
+}
+
+.sun-track {
+  position: absolute;
+  inset: 0 0 27px;
+  width: 100%;
+  height: calc(100% - 23px);
+  overflow: visible;
+}
+
+.sun-track-base,
+.sun-track-progress {
+  fill: none;
+  stroke-linecap: round;
+}
+
+.sun-track-base {
+  stroke: rgba(255, 255, 255, .76);
+  stroke-width: 1.7;
+}
+
+.sun-track-progress {
+  stroke: #ffd17a;
+  stroke-width: 2.5;
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 500;
+  transition: stroke-dashoffset .05s linear;
+}
+
+.track-point {
+  fill: rgba(255, 255, 255, .96);
+}
+
+.sun-handle {
+  position: absolute;
+  left: 50%;
+  top: 9%;
+  width: 50px;
+  height: 50px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  border: 2px solid rgba(255, 255, 255, .98);
+  border-radius: 50%;
+  background: radial-gradient(circle at 38% 34%, #fffbe4 0 15%, #ffe18b 38%, #ffc13b 69%, #f49b16 100%);
+  box-shadow:
+    0 0 0 2px rgba(255, 183, 42, .42),
+    0 0 20px 7px rgba(255, 180, 42, .42),
+    0 5px 15px rgba(100, 59, 8, .19);
+  cursor: grab;
+  transform: translate(-50%, -50%);
+  transition: box-shadow .2s ease, transform .2s ease;
+}
+
+.sun-handle:active,
+.sun-control.dragging .sun-handle {
+  cursor: grabbing;
+  transform: translate(-50%, -50%) scale(1.08);
+  box-shadow:
+    0 0 0 3px rgba(255, 184, 49, .27),
+    0 0 32px 12px rgba(255, 183, 48, .5),
+    0 7px 18px rgba(100, 59, 8, .22);
+}
+
+.time-labels {
+  position: absolute;
+  left: 5.5%;
+  right: 5.5%;
+  bottom: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  color: rgba(9, 38, 71, .88);
+  font-size: 11px;
+  font-weight: 650;
+  font-family: var(--font);
+}
+
+.time-labels span:nth-child(2) { text-align: center; }
+.time-labels span:last-child { text-align: right; }
+
+.energy-network {
+  position: absolute;
+  z-index: 8;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  opacity: var(--energy-opacity);
+  pointer-events: none;
+  transition: opacity .22s linear;
+}
+
+.energy-nodes circle {
+  fill: rgba(255, 235, 175, .92);
+  stroke: rgba(218, 151, 46, .72);
+  stroke-width: 1;
+}
+
+.energy-nodes circle:nth-child(even) {
+  opacity: .72;
+}
+
+.vegetation-layer {
+  position: absolute;
+  z-index: 6;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.vegetation-piece {
+  position: absolute;
+  opacity: 0;
+  transform: translateY(18px) scale(.88, .08);
+  transform-origin: 50% 100%;
+  will-change: opacity, transform, filter;
+  transition: opacity .38s ease, transform .76s cubic-bezier(.2, .82, .26, 1), filter .18s linear;
+  filter: brightness(var(--tree-brightness)) saturate(var(--tree-saturation));
+}
+
+.vegetation-piece.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.vegetation-piece > img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transform-origin: 50% 100%;
+  pointer-events: none;
+}
+
+.vegetation-piece.is-growing > img {
+  animation: vegetationSettle 1.35s cubic-bezier(.16, .86, .28, 1.08) both;
+}
+
+.vegetation-piece.is-visible:not(.is-growing) > img {
+  animation: vegetationBreathe var(--breathe, 8s) ease-in-out infinite alternate;
+}
+
+@keyframes vegetationSettle {
+  0% { transform: scale(.96, .72) rotate(-.35deg); filter: saturate(.82); }
+  66% { transform: scale(1.012, 1.03) rotate(.14deg); }
+  100% { transform: scale(1) rotate(0); filter: saturate(1); }
+}
+
+@keyframes vegetationBreathe {
+  from { transform: rotate(-.13deg) translateX(-.12%); }
+  to { transform: rotate(.16deg) translateX(.12%); }
+}
+
+/* Savings Lab V2 tree-only growth layers. The fixed flowers and shrubs live in
+   the landscape plate so screen changes never expose generated crop seams. */
+.scene-tree {
+  z-index: 2;
+  --breathe: 11s;
+}
+
+.tree-left-large {
+  z-index: 1;
+  left: -4%;
+  bottom: 24%;
+  width: 47%;
+  transform-origin: 50% 100%;
+  --breathe: 12.5s;
+}
+
+.tree-behind-wall {
+  z-index: 1;
+  left: 8%;
+  bottom: 20.5%;
+  width: 52%;
+  clip-path: inset(0 0 39% 0);
+  transform-origin: 43% 100%;
+  --breathe: 12.5s;
+}
+
+.tree-sky-fill {
+  z-index: 0;
+  left: 20%;
+  bottom: 28%;
+  width: 32%;
+  clip-path: inset(0 0 46% 0);
+  transform-origin: 50% 100%;
+  --breathe: 13.5s;
+}
+
+.tree-sky-fill > img { transform: scaleX(-1); }
+.tree-sky-fill.is-growing > img { animation-name: vegetationSettleFlipped; }
+.tree-sky-fill.is-visible:not(.is-growing) > img { animation-name: vegetationBreatheFlipped; }
+
+.tree-porch-palm {
+  z-index: 2;
+  left: 33%;
+  bottom: 30%;
+  width: 12%;
+  transform-origin: 50% 100%;
+  --breathe: 10s;
+}
+
+.vegetation-bed {
+  z-index: 2;
+  --breathe: 9.5s;
+}
+
+.bed-house-left {
+  left: 45.5%;
+  bottom: 26.2%;
+  width: 24%;
+}
+
+.bed-house-right {
+  right: 11.5%;
+  bottom: 27.5%;
+  width: 19%;
+  transform-origin: 62% 100%;
+}
+
+.bed-house-right > img { transform: scaleX(-1); }
+
+.bed-house-right.is-growing > img { animation-name: vegetationSettleFlipped; }
+.bed-house-right.is-visible:not(.is-growing) > img { animation-name: vegetationBreatheFlipped; }
+
+.bed-foreground {
+  z-index: 5;
+  left: 55%;
+  bottom: 10.5%;
+  width: 25%;
+}
+
+.vegetation-grove {
+  --breathe: 10.5s;
+}
+
+.grove-horizon {
+  z-index: 1;
+  right: -1.5%;
+  bottom: 48.2%;
+  width: 16.5%;
+  opacity: 0;
+  filter: brightness(var(--tree-brightness)) saturate(calc(var(--tree-saturation) * .82)) blur(.2px);
+}
+
+.grove-horizon.is-visible { opacity: .88; }
+
+.grove-right {
+  z-index: 3;
+  right: -4%;
+  bottom: 11.5%;
+  width: 24%;
+}
+
+.grove-distant-right {
+  z-index: 1;
+  right: 4%;
+  bottom: 43%;
+  width: 12.5%;
+  opacity: 0;
+  filter: brightness(var(--tree-brightness)) saturate(calc(var(--tree-saturation) * .88)) blur(.15px);
+}
+
+.grove-distant-right.is-visible { opacity: .9; }
+
+.vegetation-sprite {
+  z-index: 4;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  --breathe: 7.5s;
+}
+
+.vegetation-sprite > img {
+  position: absolute;
+  left: calc(-100% * var(--cell));
+  bottom: 0;
+  width: calc(100% * var(--cells));
+  max-width: none;
+}
+
+.sapling-pink {
+  left: 44%;
+  bottom: 14.5%;
+  width: 10.5%;
+}
+
+.sapling-green {
+  left: 58%;
+  bottom: 13%;
+  width: 10%;
+}
+
+.sapling-white {
+  right: 17%;
+  bottom: 14.2%;
+  width: 8.8%;
+}
+
+.sapling-pink-secondary {
+  right: 4.5%;
+  bottom: 17%;
+  width: 7.8%;
+}
+
+@keyframes vegetationSettleFlipped {
+  0% { transform: scaleX(-1) scale(.96, .72) rotate(-.35deg); filter: saturate(.82); }
+  66% { transform: scaleX(-1) scale(1.012, 1.03) rotate(.14deg); }
+  100% { transform: scaleX(-1) scale(1) rotate(0); filter: saturate(1); }
+}
+
+@keyframes vegetationBreatheFlipped {
+  from { transform: scaleX(-1) rotate(-.13deg) translateX(-.12%); }
+  to { transform: scaleX(-1) rotate(.16deg) translateX(.12%); }
+}
+
+.impact-bar {
+  position: absolute;
+  z-index: 14;
+  left: clamp(620px, 32.5vw, 640px);
+  right: clamp(34px, 4.2vw, 80px);
+  bottom: clamp(22px, 2.8vh, 46px);
+  min-height: 118px;
+  padding: 18px 23px;
+  display: grid;
+  grid-template-columns: 1.2fr .86fr .96fr;
+  align-items: center;
+  gap: 20px;
+  border: 1px solid rgba(255, 255, 255, .75);
+  border-radius: 24px;
+  background: rgba(249, 247, 237, .92);
+  box-shadow: 0 15px 40px rgba(13, 40, 57, .14);
+  backdrop-filter: blur(18px);
+  font-family: var(--font);
+}
+
+.impact-primary span,
+.impact-stat span {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 760;
+  letter-spacing: .065em;
+  text-transform: uppercase;
+}
+
+.impact-primary span { color: var(--orange); }
+.impact-stat span { color: #708397; }
+
+.impact-primary strong {
+  display: block;
+  margin-top: 4px;
+  color: var(--navy-deep);
+  font-size: clamp(32px, 2.2vw, 42px);
+  font-weight: 700;
+  letter-spacing: -.045em;
+  line-height: 1;
+}
+
+.impact-primary b { font-weight: inherit; }
+
+.impact-primary small {
+  display: block;
+  margin-top: 7px;
+  color: #718598;
+  font-size: 11.5px;
+}
+
+.impact-stat {
+  min-height: 63px;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-left: 1px solid var(--line);
+}
+
+.impact-stat strong {
+  display: block;
+  margin-top: 8px;
+  color: var(--navy-deep);
+  font-size: clamp(30px, 2vw, 40px);
+  font-weight: 700;
+  letter-spacing: -.035em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.scene-footnote {
+  position: absolute;
+  z-index: 15;
+  right: clamp(35px, 4.2vw, 80px);
+  bottom: 10px;
+  color: rgba(7, 38, 77, .58);
+  font-size: 8px;
+  font-weight: 620;
+  letter-spacing: .035em;
+}

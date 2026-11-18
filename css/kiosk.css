@@ -1,0 +1,324 @@
+:root {
+  --kiosk-stage-width: 1920px;
+  --kiosk-stage-height: 1080px;
+}
+
+.kiosk-viewport,
+.kiosk-shell,
+.kiosk-stage {
+  display: contents;
+}
+
+body.kiosk-mode {
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden !important;
+  background: #c8dfe1;
+}
+
+body.kiosk-mode .kiosk-viewport {
+  position: fixed;
+  z-index: 0;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: #c8dfe1;
+}
+
+body.kiosk-mode .kiosk-shell {
+  position: relative;
+  display: block;
+  flex: 0 0 auto;
+  overflow: visible;
+}
+
+body.kiosk-mode .kiosk-stage {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: block;
+  width: var(--kiosk-stage-width);
+  height: var(--kiosk-stage-height);
+  transform: scale(var(--kiosk-scale, 1));
+  transform-origin: 0 0;
+}
+
+/*
+ * Kiosk mode restores the approved 1920 x 1080 composition after every
+ * responsive stylesheet. This prevents Windows display scaling from making a
+ * 2K/4K screen inherit the tablet layout simply because it reports fewer CSS
+ * pixels. The complete stage is scaled uniformly by kiosk-display.js.
+ */
+body.kiosk-mode .savings-lab {
+  --lab-top: 97px;
+  --screen-bottom: 27px;
+  --screen-gutter: 38px;
+  --welcome-card-width: 520px;
+  --profile-card-width: 720px;
+  --card-gap: 28px;
+  width: var(--kiosk-stage-width);
+  height: var(--kiosk-stage-height);
+  min-height: var(--kiosk-stage-height);
+  overflow: hidden;
+}
+
+body.kiosk-mode .savings-lab::before {
+  position: absolute;
+}
+
+body.kiosk-mode .savings-lab::after {
+  position: absolute;
+  background:
+    linear-gradient(90deg, rgba(247, 244, 235, .72) 0%, rgba(247, 244, 235, .18) 29%, transparent 42%),
+    linear-gradient(180deg, rgba(239, 246, 247, .06), transparent 70%, rgba(8, 34, 32, .11));
+}
+
+body.kiosk-mode .savings-lab .scene-card {
+  position: absolute;
+  min-height: var(--kiosk-stage-height);
+}
+
+body.kiosk-mode .lab-topbar {
+  position: absolute;
+  top: 24px;
+  left: 38px;
+  right: 38px;
+  min-height: 60px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+body.kiosk-mode .lab-topbar .brand-lockup { gap: 17px; }
+
+body.kiosk-mode .lab-topbar .brand-logo {
+  width: 245px;
+  max-height: none;
+  margin-left: -20px;
+}
+
+body.kiosk-mode .brand-divider {
+  display: block;
+  width: 1px;
+  height: 34px;
+}
+
+body.kiosk-mode .lab-name {
+  display: block;
+  font-size: 14px;
+  letter-spacing: .2em;
+}
+
+body.kiosk-mode .lab-actions { gap: 14px; }
+body.kiosk-mode .language-toggle button { min-width: 58px; padding-inline: 14px; font-size: 14px; }
+body.kiosk-mode .lab-topbar .reset-button { width: 45px; height: 45px; }
+
+body.kiosk-mode .lab-main {
+  width: var(--kiosk-stage-width);
+  height: var(--kiosk-stage-height);
+  min-height: var(--kiosk-stage-height) !important;
+}
+
+body.kiosk-mode .lab-screen {
+  position: absolute;
+  inset: var(--lab-top) var(--screen-gutter) var(--screen-bottom);
+  min-height: 0;
+}
+
+body.kiosk-mode .welcome-screen { min-height: 0; }
+
+body.kiosk-mode .welcome-card {
+  width: var(--welcome-card-width);
+  min-width: 440px;
+  height: 100%;
+  min-height: 670px;
+  margin-inline: 0;
+  padding: 30px 54px;
+  border-radius: 30px;
+}
+
+body.kiosk-mode .eyebrow { font-size: 16px; }
+body.kiosk-mode .welcome-card h1 { font-size: 48px; }
+body.kiosk-mode .welcome-copy { font-size: 20px; }
+body.kiosk-mode .start-action { min-height: 64px; font-size: 18px; }
+
+body.kiosk-mode .profile-card {
+  width: var(--profile-card-width);
+  height: 100%;
+  min-height: 670px;
+  margin-inline: 0;
+  padding: 30px 46px;
+  overflow: hidden;
+  border-radius: 30px;
+}
+
+body.kiosk-mode .profile-screen.active .profile-card {
+  animation: profileCardExtend .56s cubic-bezier(.2, .82, .26, 1) both;
+}
+
+body.kiosk-mode .profile-screen.active .profile-card > * {
+  animation: profileContentReveal .36s ease-out .16s both;
+}
+
+body.kiosk-mode .profile-screen.is-returning .profile-card {
+  animation: profileCardCollapse .48s cubic-bezier(.55, .02, .4, 1) both;
+}
+
+body.kiosk-mode .profile-screen.is-returning .profile-card > * {
+  animation: profileContentHide .22s ease both;
+}
+
+body.kiosk-mode .card-heading-row {
+  flex-direction: row;
+  gap: 20px;
+  padding-bottom: 16px;
+}
+
+body.kiosk-mode .profile-card h1 { font-size: 32px; }
+body.kiosk-mode .profile-step .wizard-question { padding-top: 43px; }
+body.kiosk-mode .lab-question { padding-block: 16px; }
+body.kiosk-mode .compact-question { padding-block: 13px; }
+
+body.kiosk-mode .bill-entry {
+  margin: 34px 0 10px;
+  grid-template-columns: 58px minmax(0, 1fr) 58px;
+  gap: 14px;
+}
+
+body.kiosk-mode .square-button { width: 58px; height: 54px; }
+body.kiosk-mode #billInput { width: 180px; font-size: 66px; }
+body.kiosk-mode .choice-row button { min-height: 38px; }
+body.kiosk-mode .bill-presets { grid-template-columns: repeat(4, 1fr); }
+body.kiosk-mode .supply-choices,
+body.kiosk-mode .daytime-choices { grid-template-columns: repeat(3, 1fr); }
+body.kiosk-mode .wizard-choice-cards button { min-height: 92px; }
+body.kiosk-mode .daytime-detail-choices button { min-height: 150px; }
+body.kiosk-mode .location-choices,
+body.kiosk-mode .wizard-location-choices { grid-template-columns: repeat(3, 1fr); }
+body.kiosk-mode .location-choices button,
+body.kiosk-mode .wizard-location-choices button { min-height: 62px; font-size: 13px; }
+
+body.kiosk-mode .profile-actions {
+  grid-template-columns: 116px 1fr;
+  padding-top: 20px;
+}
+
+body.kiosk-mode .profile-actions .primary-action {
+  min-height: 64px;
+  padding-inline: 22px;
+  font-size: 18px;
+}
+
+body.kiosk-mode .scene-profile-only { display: flex; }
+body.kiosk-mode .live-estimate { min-width: 360px; }
+
+body.kiosk-mode .results-screen {
+  flex-direction: row;
+  align-items: stretch;
+  gap: 34px;
+}
+
+body.kiosk-mode .result-summary-card {
+  width: 635px;
+  height: 100%;
+  min-height: 730px;
+  margin-inline: 0;
+  padding: 29px 42px;
+  border-radius: 30px;
+}
+
+body.kiosk-mode .result-heading-row { flex-direction: row; }
+body.kiosk-mode .best-fit-badge { margin-top: 20px; }
+body.kiosk-mode .result-summary-card h1 { font-size: 54px; }
+body.kiosk-mode .save-label { margin-top: 28px; }
+body.kiosk-mode .hero-saving > span { font-size: 40px; }
+body.kiosk-mode .hero-saving strong { font-size: 104px; }
+body.kiosk-mode .hero-saving small { font-size: 26px; }
+
+body.kiosk-mode .result-stat-grid {
+  margin-top: 24px;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+body.kiosk-mode .result-stat-grid > div { min-height: 108px; padding: 15px 13px; }
+body.kiosk-mode .result-stat-grid strong { font-size: 28px; }
+body.kiosk-mode .payback-row { padding: 13px 18px; }
+
+body.kiosk-mode .result-actions {
+  padding-top: 22px;
+  grid-template-columns: 1.3fr .85fr;
+}
+
+body.kiosk-mode .comparison-area {
+  width: auto;
+  align-self: flex-end;
+}
+
+body.kiosk-mode .comparison-heading-row {
+  width: auto;
+  align-items: center;
+  flex-direction: row;
+  gap: 16px;
+}
+
+body.kiosk-mode .comparison-area h2 { width: auto; margin-top: 0; font-size: 24px; }
+body.kiosk-mode .result-disclaimer { font-size: 11px; text-align: right; white-space: nowrap; }
+body.kiosk-mode .comparison-grid { grid-template-columns: repeat(3, 1fr); gap: 14px; }
+body.kiosk-mode .option-card { min-height: 276px; padding: 20px 20px 17px; }
+body.kiosk-mode .option-icon { width: 58px; height: 58px; }
+body.kiosk-mode .option-icon svg { width: 50px; height: 50px; }
+body.kiosk-mode .option-card h3 { font-size: 17px; }
+body.kiosk-mode .option-card > strong { font-size: 31px; }
+body.kiosk-mode .recommended-tag { position: absolute; margin: 0; }
+
+body.kiosk-mode .result-modal {
+  position: absolute;
+  width: var(--kiosk-stage-width);
+  height: var(--kiosk-stage-height);
+  padding: 24px;
+}
+
+body.kiosk-mode .modal-card {
+  width: 720px;
+  padding: 46px 48px 42px;
+  border-radius: 32px;
+}
+
+body.kiosk-mode .result-complete-badge { width: 54px; height: 54px; margin-bottom: 22px; }
+body.kiosk-mode .modal-card h2 { padding-right: 0; font-size: 50px; }
+body.kiosk-mode .modal-card > .modal-intro { font-size: 18px; }
+body.kiosk-mode .share-hero strong { font-size: 62px; }
+body.kiosk-mode .share-metrics { grid-template-columns: repeat(3, 1fr); }
+body.kiosk-mode .share-metrics > div { display: block; padding: 18px 22px 20px; }
+body.kiosk-mode .share-metrics > div + div { border-top: 0; border-left: 1px solid var(--line); }
+body.kiosk-mode .share-metrics span { margin-bottom: 6px; }
+body.kiosk-mode .share-metrics b { font-size: 20px; text-align: left; }
+
+.display-diagnostics {
+  position: fixed;
+  z-index: 1000;
+  left: 12px;
+  bottom: 12px;
+  max-width: min(420px, calc(100vw - 24px));
+  padding: 10px 12px;
+  border: 1px solid rgba(255,255,255,.35);
+  border-radius: 10px;
+  background: rgba(4,25,43,.88);
+  color: #fff;
+  font: 600 12px/1.45 ui-monospace, SFMono-Regular, Consolas, monospace;
+  white-space: pre-line;
+  box-shadow: 0 8px 26px rgba(0,0,0,.25);
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.kiosk-mode .profile-screen.active .profile-card,
+  body.kiosk-mode .profile-screen.active .profile-card > *,
+  body.kiosk-mode .profile-screen.is-returning .profile-card,
+  body.kiosk-mode .profile-screen.is-returning .profile-card > * { animation: none; }
+}
