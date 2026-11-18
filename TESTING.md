@@ -13,6 +13,13 @@
 9. Press **Keep my result** and confirm the photo-ready result card contains savings, panel count, system size and payback.
 10. Test the complete flow in English and Chinese.
 
+## Phase calculation validation
+
+1. Select **Not sure** at both a low and high bill value, then switch to **Three-phase** and confirm the displayed panels, saving, new bill and payback remain identical.
+2. Select **Single-phase**, use a bill high enough to request more than 15 panels, and confirm solar-only, hybrid-ready and battery results all stop at 15 panels.
+3. With the same high-bill profile, switch to **Three-phase** and confirm the panel count may rise above 15 and the bill/savings recalculate.
+4. Confirm the supply hint explains that **Not sure** uses the three-phase assumption in English and Chinese.
+
 ## Large-display validation
 
 Use `index.html?kiosk=1&diagnostics=1` and test these viewport sizes in browser device emulation or on available monitors:

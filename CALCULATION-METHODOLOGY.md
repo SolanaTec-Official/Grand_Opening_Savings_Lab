@@ -16,7 +16,7 @@ The calculation file contains comments referring to spreadsheet locations such a
 | Input | Choices or range | Internal treatment |
 |---|---:|---|
 | Monthly TNB bill | RM50–RM3,000 in the interface | Rounded to the nearest RM10 and clamped to RM50–RM3,000 by the interface. The calculation API itself accepts RM50–RM5,000. Default: RM400. |
-| Electricity supply | Single-phase, three-phase, or not sure | “Not sure” becomes single-phase below RM400 and three-phase at RM400 or above. Default: not sure. |
+| Electricity supply | Single-phase, three-phase, or not sure | “Not sure” always resolves to three-phase. Default: not sure. |
 | Daytime electricity share | 10%–70%, in 5-point slider steps | Stored as a ratio from 0.10 to 0.70. Presets are 15%, 30%, and 50%. Default: 30%. |
 | Location | 11 towns | Selects the monthly energy-yield assumption shown in section 4. Default: Johor Bahru. |
 
@@ -175,7 +175,7 @@ Raw recommendation:
 
 Solar-only panel count:
 
-- single-phase: `N = clamp(Nraw, 8, 23)`
+- single-phase: `N = clamp(Nraw, 8, 15)`
 - three-phase: `N = clamp(Nraw, 8, 47)`
 
 Hybrid and battery panel count:
@@ -183,7 +183,7 @@ Hybrid and battery panel count:
 - single-phase: the same `N` as solar only;
 - three-phase: `Nh = max(13, N)`.
 
-This means every proposal is at least eight panels, three-phase hybrid/battery proposals are at least 13 panels, single-phase proposals are capped at 23 panels, and three-phase proposals are capped at 47 panels.
+This means every proposal is at least eight panels, three-phase hybrid/battery proposals are at least 13 panels, single-phase proposals are capped at 15 panels, and three-phase proposals are capped at 47 panels.
 
 ## 8. Solar generation and energy allocation
 
@@ -351,7 +351,7 @@ All values below are RM before the calculator’s 12% cash discount. A dash mean
 | 54 | — | 65,105 |
 | 55 | — | 65,868 |
 
-Current sizing caps mean single-phase entries above 23 panels and three-phase entries above 47 panels are not selected by the website.
+Current sizing caps mean single-phase entries above 15 panels and three-phase entries above 47 panels are not selected by the website.
 
 ### 11.2 Hybrid-inverter addition
 
@@ -412,7 +412,7 @@ Number-counting animations are visual only and do not change the calculated targ
 Inputs:
 
 - Bill: RM400/month
-- Supply: not sure → resolves to three-phase because the bill is at least RM400
+- Supply: not sure → always resolves to three-phase
 - Daytime share: 30%
 - Location: Johor Bahru
 - Yield: 96 kWh/kWp/month
@@ -470,7 +470,7 @@ These values were generated directly from the V3 calculation engine and can be u
 | RM721–RM880 conversion | Every bill in this interval maps to exactly 1,501 kWh. | Pending |
 | `EEI` treatment | The code adds `eligible export × EEI(import)` before subtracting export credit. | Pending |
 | Export rates and cap | Confirm RM0.2703/RM0.3703 per kWh and the cap at `min(export, import)`. | Pending |
-| Auto phase inference | “Not sure” changes to three-phase solely at a RM400 bill threshold. | Pending |
+| Default phase assumption | “Not sure” always uses the three-phase calculation. Confirm this remains the intended default. | Sales clarification applied |
 | Solar-yield values | Confirm each town’s monthly yield, roof-angle scope, losses, shading, and seasonal treatment. | Pending |
 | Panel sizing limits | Confirm minimum eight panels, three-phase hybrid minimum 13, and caps of 23/47. | Pending |
 | 27/28-panel generation exceptions | These use 16.51 kWp plus fixed 50/90 kWh adjustments while displayed kWp remains panel count × 0.65. | Pending |

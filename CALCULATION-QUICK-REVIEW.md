@@ -9,9 +9,9 @@
 | Stage | How the website calculates it |
 |---|---|
 | 1. Bill → electricity use | The monthly bill is converted to estimated kWh. Bills below RM472 use an embedded TNB bill lookup table. Higher bills use reverse-calculation formulas. Bills from RM721 to RM880 currently all become exactly **1,501 kWh**. |
-| 2. Supply phase | The user selects single- or three-phase. If “Not sure” is selected, bills below RM400 become single-phase and bills of RM400 or more become three-phase. |
+| 2. Supply phase | The user selects single- or three-phase. “Not sure” always uses the three-phase calculation assumption. |
 | 3. Solar yield | The selected town supplies a monthly yield of **96, 99, or 106.5 kWh per kWp**. |
-| 4. Panel quantity | `floor(monthly kWh ÷ location yield ÷ 0.65 kWp)`. The result is constrained to 8–23 panels for single-phase and 8–47 for three-phase. Three-phase hybrid/battery systems have a minimum of 13 panels. |
+| 4. Panel quantity | `floor(monthly kWh ÷ location yield ÷ 0.65 kWp)`. The result is constrained to 8–15 panels for single-phase and 8–47 for three-phase. Three-phase hybrid/battery systems have a minimum of 13 panels. |
 | 5. Solar generation | Normally: `panels × 0.65 kWp × location yield`. Special rules are used for 27 and 28 panels. |
 | 6. Direct solar use | `minimum(daytime-use percentage × monthly consumption, solar generation)`. Daytime share can be 10%–70%. |
 | 7. Battery storage | Battery option only: up to **388.8 kWh/month**, based on `16 kWh × 90% × 90% × 30 days`. |
@@ -38,7 +38,7 @@
 
 **Input:** RM400 bill, “Not sure” phase, 30% daytime use, Johor Bahru.
 
-- Resolved phase: three-phase
+- Resolved phase: three-phase because “Not sure” always uses the three-phase assumption
 - Estimated consumption: 861 kWh/month
 - System: 13 panels, 8.45 kWp
 - Estimated generation: 811.2 kWh/month

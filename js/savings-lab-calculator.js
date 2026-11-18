@@ -62,7 +62,7 @@
     const yieldK = YIELD[area]||96;
     const cons = consumptionFromBill(bill);
     const rec = Math.floor(cons/yieldK/(PANEL_W/1000));
-    const maxN = phase==='single'?23:47;
+    const maxN = phase==='single'?15:47;
     const n = Math.max(8, Math.min(maxN, rec));
     const nh = phase==='three' ? Math.max(13,n) : n;
     return {cons, rec, onGrid:proposal({bill,cons,phase,n,yieldK,dayRatio,battery:false,hybrid:false}),
@@ -73,7 +73,7 @@
   function calculateProfile(input) {
     const bill = Math.max(50, Math.min(5000, Number(input.bill) || 400));
     const requestedPhase = input.phase || "auto";
-    const resolvedPhase = requestedPhase === "auto" ? (bill >= 400 ? "three" : "single") : requestedPhase;
+    const resolvedPhase = requestedPhase === "auto" ? "three" : requestedPhase;
     const dayRatio = Math.max(0.1, Math.min(0.7, Number(input.dayRatio) || 0.3));
     const area = YIELD[input.area] ? input.area : "JB";
     return {

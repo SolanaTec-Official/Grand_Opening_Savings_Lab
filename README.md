@@ -1,4 +1,4 @@
-# Solana Tec Savings Lab
+# Solana Tec Savings Lab V3
 
 Local, modular booth-game version of the Solana Tec solar savings calculator.
 
